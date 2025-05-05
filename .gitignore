@@ -1,0 +1,39 @@
+# Ignore arquivos de build
+bin/
+obj/
+*.user
+*.rsuser
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Ignore arquivos de log
+*.log
+
+# Ignore configurações locais
+.vscode/
+.idea/
+*.swp
+
+# Ignore arquivos de publicação
+publish/
+out/
+
+# Ignore pacotes
+*.nupkg
+*.snupkg
+
+# Ignore arquivos de lock
+project.lock.json
+project.fragment.lock.json
+
+# Ignore diretórios do sistema
+.DS_Store
+Thumbs.db
+
+# Ignore arquivos gerados pelo Rider
+.idea/
+*.iml
+
+# Ignore arquivos de teste
+TestResults/
