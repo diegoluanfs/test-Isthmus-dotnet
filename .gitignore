@@ -37,3 +37,7 @@ Thumbs.db
 
 # Ignore arquivos de teste
 TestResults/
+
+# Arquivos desnecessários
+*.log
+*.tmp

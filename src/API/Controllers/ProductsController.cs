@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using Domain.Entities;
-using Infrastructure.Data;
+using Domain.DTOs;
+using Application.Interfaces;
 
 namespace API.Controllers
 {
@@ -8,26 +8,39 @@ namespace API.Controllers
     [Route("api/[controller]")]
     public class ProductsController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IProductService _productService; // Alterado para IProductService
 
-        public ProductsController(ApplicationDbContext context)
+        public ProductsController(IProductService productService)
         {
-            _context = context;
-        }
-
-        [HttpGet]
-        public IActionResult GetAll()
-        {
-            var products = _context.Products.ToList();
-            return Ok(products);
+            _productService = productService;
         }
 
         [HttpPost]
-        public IActionResult Create(Product product)
+        public async Task<IActionResult> Create(ProductDto productDto)
         {
-            _context.Products.Add(product);
-            _context.SaveChanges();
-            return CreatedAtAction(nameof(GetAll), new { id = product.Id }, product);
+            try
+            {
+                if (string.IsNullOrWhiteSpace(productDto.Codigo) ||
+                    string.IsNullOrWhiteSpace(productDto.Nome) ||
+                    string.IsNullOrWhiteSpace(productDto.Descricao) ||
+                    productDto.Preco <= 0)
+                {
+                    return BadRequest("Dados inválidos.");
+                }
+
+                var product = await _productService.ConvertAndSanitizeProductAsync(productDto);
+                await _productService.AddProductAsync(product);
+
+                return CreatedAtAction(nameof(Create), new { id = product.Id }, product);
+            }
+            catch (ArgumentException ex)
+            {
+                return Conflict(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erro interno: {ex.Message}");
+            }
         }
     }
 }

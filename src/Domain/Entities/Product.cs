@@ -2,10 +2,10 @@ namespace Domain.Entities
 {
     public class Product
     {
-        public int Id { get; set; }
-        public string Codigo { get; set; }
-        public string Nome { get; set; }
-        public string Descricao { get; set; }
+        public Guid Id { get; set; }
+        public string Codigo { get; set; } = string.Empty; 
+        public string Nome { get; set; } = string.Empty; 
+        public string Descricao { get; set; } = string.Empty; 
         public decimal Preco { get; set; }
         public bool Ativo { get; set; }
     }
