@@ -80,5 +80,42 @@ namespace Application.Services
                 await _productRepository.AddAsync(product);
             }
         }
+
+        public async Task<bool> UpdateProductAsync(Product product)
+        {
+            var existingProduct = await _productRepository.GetByIdAsync(product.Id);
+
+            if (existingProduct == null)
+            {
+                return false;
+            }
+
+            // Atualiza os campos do produto existente
+            existingProduct.Codigo = product.Codigo;
+            existingProduct.Nome = product.Nome;
+            existingProduct.Descricao = product.Descricao;
+            existingProduct.Preco = product.Preco;
+            existingProduct.Ativo = product.Ativo;
+
+            await _productRepository.UpdateAsync(existingProduct);
+            return true;
+        }
+
+        public async Task<bool> DeleteProductAsync(Guid id)
+        {
+            var existingProduct = await _productRepository.GetByIdAsync(id);
+
+            if (existingProduct == null)
+            {
+                return false; // Produto não encontrado
+            }
+
+            // Exclusão lógica: marca o produto como inativo
+            existingProduct.Ativo = false;
+
+            await _productRepository.UpdateAsync(existingProduct);
+            return true;
+        }
+
     }
 }
