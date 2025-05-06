@@ -15,6 +15,27 @@ namespace API.Controllers
             _productService = productService;
         }
 
+
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            try
+            {
+                var products = await _productService.GetAllProductsAsync();
+
+                if (products == null || !products.Any())
+                {
+                    return NoContent(); // Retorna 204 se não houver produtos
+                }
+
+                return Ok(products); // Retorna 200 com a lista de produtos
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erro interno: {ex.Message}");
+            }
+        }
+
         [HttpPost]
         public async Task<IActionResult> Create(ProductDto productDto)
         {
