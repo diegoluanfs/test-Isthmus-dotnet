@@ -10,19 +10,20 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Configurar o Serilog
 Log.Logger = new LoggerConfiguration()
-    .ReadFrom.Configuration(builder.Configuration) // Lê as configurações do appsettings.json
+    .ReadFrom.Configuration(builder.Configuration)
     .Enrich.FromLogContext()
-    .WriteTo.Console() // Log no console
-    .WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day) // Log em arquivo
+    .WriteTo.Console()
+    .WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day)
     .CreateLogger();
 
-builder.Host.UseSerilog(); // Substitui o logger padrão pelo Serilog
+builder.Host.UseSerilog();
 
 // Configurar o DbContext com base no ambiente
 if (builder.Environment.IsEnvironment("Testing"))
 {
     builder.Services.AddDbContext<ApplicationDbContext>(options =>
-        options.UseInMemoryDatabase("TestingDb"));
+        options.UseInMemoryDatabase("TestingDb")); // Banco de dados em memória para testes
+    Console.WriteLine("Executando no ambiente de testes com banco de dados em memória.");
 }
 else
 {
@@ -30,7 +31,6 @@ else
         options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 }
 
-// Adicionar serviços ao container
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -58,21 +58,32 @@ using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     var connectionString = dbContext.Database.GetDbConnection().ConnectionString;
-    Console.WriteLine($"Conectado ao banco de dados: {connectionString}");
 
-    if (app.Environment.IsDevelopment())
+    try
     {
-        Console.WriteLine("Iniciando migrações...");
-        dbContext.Database.Migrate();
-        Console.WriteLine("Migrações concluídas.");
+        if (!builder.Environment.IsEnvironment("Testing")) // Evita migrações no ambiente de testes
+        {
+            Console.WriteLine($"Conectado ao banco de dados: {connectionString}");
+            Console.WriteLine("Verificando e aplicando migrações pendentes...");
+            dbContext.Database.Migrate(); // Aplica apenas as migrações pendentes
+            Console.WriteLine("Migrações aplicadas com sucesso.");
+        }
+        else
+        {
+            Console.WriteLine("Banco de dados em memória configurado para testes.");
+        }
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Erro ao configurar o banco de dados: {ex.Message}");
+        throw;
     }
 }
 
 var url = builder.Configuration["ASPNETCORE_URLS"] ?? "http://localhost:5000";
 Console.WriteLine($"Aplicação iniciada e disponível em: {url}");
 
-app.UseSerilogRequestLogging(); // Adiciona logs para cada requisição
-
+app.UseSerilogRequestLogging();
 app.UseAuthorization();
 app.MapControllers();
 app.Run();

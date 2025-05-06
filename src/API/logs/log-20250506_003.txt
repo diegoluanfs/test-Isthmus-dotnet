@@ -1,0 +1,6 @@
+2025-05-06 10:16:56.161 -03:00 [INF] Iniciando a requisição para listar todos os produtos.
+2025-05-06 10:16:56.436 -03:00 [INF] Produtos retornados com sucesso.
+2025-05-06 10:16:56.476 -03:00 [INF] HTTP GET /api/Products responded 200 in 326.6450 ms
+2025-05-06 10:20:31.702 -03:00 [INF] Iniciando a requisição para listar todos os produtos.
+2025-05-06 10:20:32.021 -03:00 [INF] Produtos retornados com sucesso.
+2025-05-06 10:20:32.065 -03:00 [INF] HTTP GET /api/Products responded 200 in 376.5188 ms

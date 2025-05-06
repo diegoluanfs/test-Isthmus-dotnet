@@ -1,0 +1,9 @@
+2025-05-06 10:16:27.809 -03:00 [INF] Iniciando a requisição para criar um novo produto.
+2025-05-06 10:16:28.248 -03:00 [INF] Produto criado com sucesso. ID: "dc9b57c9-020f-4da9-bb11-e7105c3114de"
+2025-05-06 10:16:28.290 -03:00 [INF] HTTP POST /api/Products responded 201 in 547.4605 ms
+2025-05-06 10:16:35.486 -03:00 [INF] Iniciando a requisição para listar todos os produtos.
+2025-05-06 10:16:35.547 -03:00 [INF] Produtos retornados com sucesso.
+2025-05-06 10:16:35.554 -03:00 [INF] HTTP GET /api/Products responded 200 in 76.3091 ms
+2025-05-06 10:16:56.161 -03:00 [INF] Iniciando a requisição para listar todos os produtos.
+2025-05-06 10:16:56.436 -03:00 [INF] Produtos retornados com sucesso.
+2025-05-06 10:16:56.476 -03:00 [INF] HTTP GET /api/Products responded 200 in 326.6450 ms
