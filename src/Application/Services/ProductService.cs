@@ -54,16 +54,15 @@ namespace Application.Services
 
         public async Task AddProductAsync(Product product)
         {
-            // Verifica se o produto já existe pelo código
+            // Verifica se já existe um produto com o mesmo código e ativo = true
             var existingProduct = await _productRepository.GetByCodigoAsync(product.Codigo);
 
-            if (existingProduct != null)
+            if (existingProduct != null && existingProduct.Ativo)
             {
                 // Atualiza os campos do produto existente, mantendo o Id
                 existingProduct.Nome = product.Nome;
                 existingProduct.Descricao = product.Descricao;
                 existingProduct.Preco = product.Preco;
-                existingProduct.Ativo = product.Ativo;
 
                 // Atualiza o produto no repositório
                 await _productRepository.UpdateAsync(existingProduct);
@@ -83,11 +82,20 @@ namespace Application.Services
 
         public async Task<bool> UpdateProductAsync(Product product)
         {
+            // Verifica se existe algum produto com o mesmo código e ativo = true
+            var conflictingProduct = await _productRepository.GetByCodigoAsync(product.Codigo);
+
+            if (conflictingProduct != null && conflictingProduct.Id != product.Id && conflictingProduct.Ativo)
+            {
+                // Não é possível atualizar, pois já existe um produto ativo com o mesmo código
+                return false;
+            }
+
             var existingProduct = await _productRepository.GetByIdAsync(product.Id);
 
             if (existingProduct == null)
             {
-                return false;
+                return false; // Produto não encontrado
             }
 
             // Atualiza os campos do produto existente

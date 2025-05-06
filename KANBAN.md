@@ -193,5 +193,6 @@
 
 ---
 
-**ERRO IDENTIFICADO**
-- Ao atualizar o código do produto, ele permite que tenham o mesmo código.
+**ERROS/QUESTIONAMENTOS IDENTIFICADOS**
+- (Resolvido) Ao atualizar o código do produto, ele permite que tenham o mesmo código.
+- O usuário deveria ter a possibilidade de alterar a propriedade Ativo de um produto?

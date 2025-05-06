@@ -1,6 +1,3 @@
-2025-05-06 10:20:31.702 -03:00 [INF] Iniciando a requisição para listar todos os produtos.
-2025-05-06 10:20:32.021 -03:00 [INF] Produtos retornados com sucesso.
-2025-05-06 10:20:32.065 -03:00 [INF] HTTP GET /api/Products responded 200 in 376.5188 ms
 2025-05-06 14:31:32.503 -03:00 [INF] Iniciando a requisição para listar todos os produtos.
 2025-05-06 14:31:32.999 -03:00 [INF] Produtos retornados com sucesso.
 2025-05-06 14:31:33.046 -03:00 [INF] HTTP GET /api/Products responded 200 in 563.6981 ms
@@ -34,3 +31,24 @@
 2025-05-06 14:33:11.484 -03:00 [INF] Iniciando a requisição para listar todos os produtos.
 2025-05-06 14:33:11.494 -03:00 [INF] Produtos retornados com sucesso.
 2025-05-06 14:33:11.499 -03:00 [INF] HTTP GET /api/Products responded 200 in 15.4720 ms
+2025-05-06 14:35:39.837 -03:00 [INF] Iniciando a requisição para listar todos os produtos.
+2025-05-06 14:35:40.188 -03:00 [INF] Produtos retornados com sucesso.
+2025-05-06 14:35:40.227 -03:00 [INF] HTTP GET /api/Products responded 200 in 399.7399 ms
+2025-05-06 14:35:53.189 -03:00 [INF] Iniciando a requisição para excluir o produto com ID: "971e70b5-3dde-492f-bf1d-cee66621f1d8"
+2025-05-06 14:35:53.469 -03:00 [INF] Produto com ID "971e70b5-3dde-492f-bf1d-cee66621f1d8" excluído com sucesso.
+2025-05-06 14:35:53.473 -03:00 [INF] HTTP DELETE /api/Products/971e70b5-3dde-492f-bf1d-cee66621f1d8 responded 204 in 304.2438 ms
+2025-05-06 14:35:58.958 -03:00 [INF] Iniciando a requisição para listar todos os produtos.
+2025-05-06 14:35:58.967 -03:00 [INF] Produtos retornados com sucesso.
+2025-05-06 14:35:58.975 -03:00 [INF] HTTP GET /api/Products responded 200 in 27.8875 ms
+2025-05-06 14:36:12.981 -03:00 [INF] Iniciando a requisição para criar um novo produto.
+2025-05-06 14:36:13.034 -03:00 [INF] Produto criado com sucesso. ID: "a9457bd8-3f68-4543-b99b-f008a1094073"
+2025-05-06 14:36:13.050 -03:00 [INF] HTTP POST /api/Products responded 201 in 86.2598 ms
+2025-05-06 14:36:23.232 -03:00 [INF] Iniciando a requisição para listar todos os produtos.
+2025-05-06 14:36:23.236 -03:00 [INF] Produtos retornados com sucesso.
+2025-05-06 14:36:23.240 -03:00 [INF] HTTP GET /api/Products responded 200 in 8.4975 ms
+2025-05-06 14:36:52.850 -03:00 [INF] Iniciando a requisição para atualizar o produto com ID: "a9457bd8-3f68-4543-b99b-f008a1094073"
+2025-05-06 14:36:52.877 -03:00 [INF] Produto com ID "a9457bd8-3f68-4543-b99b-f008a1094073" atualizado com sucesso.
+2025-05-06 14:36:52.881 -03:00 [INF] HTTP PUT /api/Products/a9457bd8-3f68-4543-b99b-f008a1094073 responded 204 in 36.1953 ms
+2025-05-06 14:37:01.291 -03:00 [INF] Iniciando a requisição para listar todos os produtos.
+2025-05-06 14:37:01.295 -03:00 [INF] Produtos retornados com sucesso.
+2025-05-06 14:37:01.298 -03:00 [INF] HTTP GET /api/Products responded 200 in 7.9701 ms
