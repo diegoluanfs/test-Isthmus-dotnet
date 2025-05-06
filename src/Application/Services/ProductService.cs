@@ -1,7 +1,7 @@
 using Domain.Entities;
 using Domain.Interfaces;
 using Application.Interfaces;
-using Domain.DTOs;
+using Application.DTOs;
 
 namespace Application.Services
 {
