@@ -49,7 +49,7 @@ Abra o navegador e acesse: [http://localhost:5000/swagger](http://localhost:5000
 2. Execute o comando:
 
 ```bash
-dotnet test
+dotnet test --logger "console;verbosity=detailed"
 ```
 
 ---
