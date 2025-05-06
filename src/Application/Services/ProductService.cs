@@ -24,6 +24,11 @@ namespace Application.Services
             _productRepository = productRepository;
         }
 
+        public async Task<IEnumerable<Product>> GetAllProductsAsync()
+        {
+            return await _productRepository.GetAllAsync();
+        }
+
         public async Task<Product> ConvertAndSanitizeProductAsync(ProductDto productDto)
         {
             // Converter ProductDto para Product
@@ -35,8 +40,6 @@ namespace Application.Services
                 Preco = productDto.Preco,
                 Ativo = productDto.Ativo
             };
-
-            product.Id = _guidService.GenerateGuid();
 
             // Sanitizar os campos
             product.Codigo = _sanitizationService.SanitizeString(product.Codigo?.Trim().ToUpper());
@@ -51,12 +54,31 @@ namespace Application.Services
 
         public async Task AddProductAsync(Product product)
         {
-            if (await _productRepository.ExistsByCodigoAsync(product.Codigo))
-            {
-                throw new ArgumentException("Já existe um produto com o mesmo código.");
-            }
+            // Verifica se o produto já existe pelo código
+            var existingProduct = await _productRepository.GetByCodigoAsync(product.Codigo);
 
-            await _productRepository.AddAsync(product);
+            if (existingProduct != null)
+            {
+                // Atualiza os campos do produto existente, mantendo o Id
+                existingProduct.Nome = product.Nome;
+                existingProduct.Descricao = product.Descricao;
+                existingProduct.Preco = product.Preco;
+                existingProduct.Ativo = product.Ativo;
+
+                // Atualiza o produto no repositório
+                await _productRepository.UpdateAsync(existingProduct);
+
+                // Atualiza o objeto `product` com o Id do produto existente
+                product.Id = existingProduct.Id;
+            }
+            else
+            {
+                // Gera um novo Id para o produto
+                product.Id = _guidService.GenerateGuid();
+
+                // Adiciona o novo produto
+                await _productRepository.AddAsync(product);
+            }
         }
     }
 }

@@ -45,10 +45,10 @@ namespace Infrastructure.Repositories
                 await _context.SaveChangesAsync();
             }
         }
-
-        public async Task<bool> ExistsByCodigoAsync(string codigo)
+        
+        public async Task<Product> GetByCodigoAsync(string codigo)
         {
-            return await _context.Products.AnyAsync(p => p.Codigo == codigo);
+            return await _context.Products.FirstOrDefaultAsync(p => p.Codigo == codigo);
         }
     }
 }

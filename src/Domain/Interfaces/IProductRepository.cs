@@ -9,6 +9,6 @@ namespace Domain.Interfaces
         Task AddAsync(Product product);
         Task UpdateAsync(Product product);
         Task DeleteAsync(Guid id);
-        Task<bool> ExistsByCodigoAsync(string codigo);
+        Task<Product> GetByCodigoAsync(string codigo);
     }
 }
