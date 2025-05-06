@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using Domain.DTOs;
+using Application.DTOs;
 using Application.Interfaces;
+using Domain.Entities;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace API.Controllers
@@ -33,14 +34,14 @@ namespace API.Controllers
 
                 if (products == null || !products.Any())
                 {
-                    return NoContent();
+                    return Ok(new ApiResponse<object>(204, "Nenhum produto encontrado."));
                 }
 
-                return Ok(products);
+                return Ok(new ApiResponse<IEnumerable<Product>>(200, "Lista de produtos retornada com sucesso.", products));
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Erro interno: {ex.Message}");
+                return StatusCode(500, new ApiResponse<object>(500, "Erro interno.", null, new List<string> { ex.Message }));
             }
         }
 
@@ -63,21 +64,22 @@ namespace API.Controllers
                     string.IsNullOrWhiteSpace(productDto.Descricao) ||
                     productDto.Preco <= 0)
                 {
-                    return BadRequest("Dados inválidos.");
+                    return BadRequest(new ApiResponse<object>(400, "Dados inválidos."));
                 }
 
                 var product = await _productService.ConvertAndSanitizeProductAsync(productDto);
                 await _productService.AddProductAsync(product);
 
-                return CreatedAtAction(nameof(Create), new { id = product.Id }, product);
+                return CreatedAtAction(nameof(Create), new { id = product.Id },
+                    new ApiResponse<Product>(201, "Produto criado com sucesso.", product));
             }
             catch (ArgumentException ex)
             {
-                return Conflict(ex.Message);
+                return Conflict(new ApiResponse<object>(409, ex.Message));
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Erro interno: {ex.Message}");
+                return StatusCode(500, new ApiResponse<object>(500, "Erro interno.", null, new List<string> { ex.Message }));
             }
         }
 
@@ -103,7 +105,7 @@ namespace API.Controllers
                     string.IsNullOrWhiteSpace(productDto.Descricao) ||
                     productDto.Preco <= 0)
                 {
-                    return BadRequest("Dados inválidos.");
+                    return BadRequest(new ApiResponse<object>(400, "Dados inválidos."));
                 }
 
                 var product = await _productService.ConvertAndSanitizeProductAsync(productDto);
@@ -113,14 +115,14 @@ namespace API.Controllers
 
                 if (!updated)
                 {
-                    return NotFound($"Produto com ID {id} não encontrado.");
+                    return NotFound(new ApiResponse<object>(404, $"Produto com ID {id} não encontrado."));
                 }
 
                 return NoContent();
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Erro interno: {ex.Message}");
+                return StatusCode(500, new ApiResponse<object>(500, "Erro interno.", null, new List<string> { ex.Message }));
             }
         }
 
@@ -141,21 +143,21 @@ namespace API.Controllers
             {
                 if (id == Guid.Empty)
                 {
-                    return BadRequest("ID inválido.");
+                    return BadRequest(new ApiResponse<object>(400, "ID inválido."));
                 }
 
                 var deleted = await _productService.DeleteProductAsync(id);
 
                 if (!deleted)
                 {
-                    return NotFound($"Produto com ID {id} não encontrado.");
+                    return NotFound(new ApiResponse<object>(404, $"Produto com ID {id} não encontrado."));
                 }
 
                 return NoContent();
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Erro interno: {ex.Message}");
+                return StatusCode(500, new ApiResponse<object>(500, "Erro interno.", null, new List<string> { ex.Message }));
             }
         }
     }
