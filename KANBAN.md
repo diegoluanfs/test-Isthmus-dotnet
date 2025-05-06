@@ -150,6 +150,9 @@
 - Todos os testes devem passar.
 - Os testes devem cobrir os cenários principais e de erro.
 
+**Observação**
+- Para o futuro: Tirar os testes do Dockerfile e colocar no CI/CD
+
 ---
 
 ### **12. Criar o Dockerfile**
@@ -190,4 +193,5 @@
 
 ---
 
-Esses cards podem ser organizados no Kanban e desenvolvidos um por vez, garantindo que cada funcionalidade seja implementada e testada de forma independente.
+**ERRO IDENTIFICADO**
+- Ao atualizar o código do produto, ele permite que tenham o mesmo código.

@@ -33,7 +33,10 @@ else
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.EnableAnnotations();
+});
 
 builder.Services.AddScoped<SanitizationService>();
 builder.Services.AddScoped<ValidationService>();
@@ -48,7 +51,7 @@ builder.Services.AddSwaggerGen(c =>
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment() || app.Environment.IsEnvironment("Testing") || app.Environment.IsProduction())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
@@ -65,8 +68,17 @@ using (var scope = app.Services.CreateScope())
         {
             Console.WriteLine($"Conectado ao banco de dados: {connectionString}");
             Console.WriteLine("Verificando e aplicando migrações pendentes...");
-            dbContext.Database.Migrate(); // Aplica apenas as migrações pendentes
-            Console.WriteLine("Migrações aplicadas com sucesso.");
+
+            // Verifica se o banco de dados já existe antes de aplicar migrações
+            if (!dbContext.Database.CanConnect())
+            {
+                dbContext.Database.Migrate(); // Aplica apenas as migrações pendentes
+                Console.WriteLine("Migrações aplicadas com sucesso.");
+            }
+            else
+            {
+                Console.WriteLine("Banco de dados já existe. Nenhuma migração necessária.");
+            }
         }
         else
         {
