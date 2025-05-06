@@ -1,0 +1,12 @@
+2025-05-06 02:26:43.334 -03:00 [INF] Iniciando a requisição para listar todos os produtos.
+2025-05-06 02:26:44.353 -03:00 [WRN] Nenhum produto encontrado.
+2025-05-06 02:26:44.394 -03:00 [INF] HTTP GET /api/Products responded 200 in 1079.4520 ms
+2025-05-06 02:26:55.234 -03:00 [INF] Iniciando a requisição para criar um novo produto.
+2025-05-06 02:26:55.237 -03:00 [WRN] Dados inválidos fornecidos para criação do produto.
+2025-05-06 02:26:55.240 -03:00 [INF] HTTP POST /api/Products responded 400 in 40.2172 ms
+2025-05-06 02:27:04.477 -03:00 [INF] Iniciando a requisição para criar um novo produto.
+2025-05-06 02:27:04.817 -03:00 [INF] Produto criado com sucesso. ID: "dc9b57c9-020f-4da9-bb11-e7105c3114de"
+2025-05-06 02:27:04.843 -03:00 [INF] HTTP POST /api/Products responded 201 in 369.2645 ms
+2025-05-06 02:27:11.189 -03:00 [INF] Iniciando a requisição para listar todos os produtos.
+2025-05-06 02:27:11.199 -03:00 [INF] Produtos retornados com sucesso.
+2025-05-06 02:27:11.205 -03:00 [INF] HTTP GET /api/Products responded 200 in 17.0002 ms
