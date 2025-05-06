@@ -96,5 +96,30 @@ namespace API.Controllers
             }
         }
 
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            try
+            {
+                if (id == Guid.Empty)
+                {
+                    return BadRequest("ID inválido.");
+                }
+
+                var deleted = await _productService.DeleteProductAsync(id);
+
+                if (!deleted)
+                {
+                    return NotFound($"Produto com ID {id} não encontrado.");
+                }
+
+                return NoContent(); // Retorna 204 No Content
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erro interno: {ex.Message}");
+            }
+        }
+        
     }
 }
